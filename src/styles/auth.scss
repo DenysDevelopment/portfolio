@@ -1,0 +1,41 @@
+.auth {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		width: 400px;
+		input,
+		button {
+			border: 0;
+			height: 60px;
+			background: #ffffff;
+			border-radius: 10px;
+			font-family: inherit;
+			font-size: 50px;
+			font-weight: 700;
+			font-size: 29px;
+			letter-spacing: 0.125em;
+			color: #000000;
+			padding: 0 20px;
+			&:focus {
+				outline: 2px solid rgb(160, 117, 0);
+			}
+		}
+		button {
+			cursor: pointer;
+			transition: all 0.3s ease 0s;
+			@media (any-hover: hover) {
+				&:hover {
+					background: rgb(238, 238, 238);
+				}
+			}
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}

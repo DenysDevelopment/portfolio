@@ -1,0 +1,60 @@
+.header {
+	font-size: 34px;
+	padding: 20px 0;
+	&__body {
+		display: flex;
+	}
+}
+
+.menu {
+	position: relative;
+	margin: 0 auto;
+	&__list {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		gap: 50px;
+		list-style-type: none;
+	}
+	&__slider {
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: #fff;
+		height: 45px;
+		width: 75px;
+		z-index: 1;
+		border-radius: 10px;
+		transition: all 0.3s ease 0s;
+	}
+	&__link {
+		font-weight: 700;
+		text-decoration: none;
+		color: inherit;
+		transition: all 0.3s ease 0s;
+		padding: 0 10px;
+		color: #fff;
+		&.active {
+			color: #fcb82f;
+		}
+	}
+}
+
+input,
+textarea {
+	width: 400px;
+	border: 0;
+	height: 60px;
+	background: #ffffff;
+	border-radius: 10px;
+	font-family: inherit;
+	font-size: 50px;
+	font-weight: 700;
+	font-size: 29px;
+	letter-spacing: 0.125em;
+	color: #000000;
+	padding: 0 20px;
+	&:focus {
+		outline: 2px solid rgb(160, 117, 0);
+	}
+}
