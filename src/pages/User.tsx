@@ -1,6 +1,8 @@
 import React from 'react';
-import { useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 import { WorkItem } from '../components';
+import { onAuthState } from '../firebase/authUser';
 import { getData } from '../firebase/dataUser';
 
 interface userDataType {
@@ -11,13 +13,11 @@ interface userDataType {
 
 export const User = () => {
 	const { username } = useParams();
-	const [userData, setUserData] = React.useState<any>({});
-	const [userFound, setUserFound] = React.useState<string>('');
+	const [userData, setUserData] = React.useState<any>();
 
 	React.useEffect(() => {
 		getData().then((data) => {
 			data.forEach((user) => {
-				console.log(1);
 				if (user.data().uid === username) {
 					setUserData(user.data());
 				}
@@ -39,30 +39,34 @@ export const User = () => {
 
 	return (
 		<div className='container'>
-			{Object.keys(userData).length === 0 ? (
-				<>
-					<p style={{ textAlign: 'center', fontSize: 50 }}>
-						Пользователь не найден
-					</p>
-					<img
-						style={{
-							width: '50%',
-							textAlign: 'center',
-							margin: `0 auto`,
-							display: 'block',
-						}}
-						src={randomGif()}
-						alt=''
-					/>
-				</>
+			{userData ? (
+				Object.keys(userData).length === 0 ? (
+					<>
+						<p style={{ textAlign: 'center', fontSize: 50 }}>
+							Пользователь не найден
+						</p>
+						<img
+							style={{
+								width: '50%',
+								textAlign: 'center',
+								margin: `0 auto`,
+								display: 'block',
+							}}
+							src={randomGif()}
+							alt=''
+						/>
+					</>
+				) : (
+					<>
+						<h1 style={{ textAlign: 'center' }}>{userData.name}</h1>
+						<p style={{ textAlign: 'center' }}>
+							Количество проектов {userData?.works?.length}
+						</p>
+						<WorkItem {...userData} />
+					</>
+				)
 			) : (
-				<>
-					<h1 style={{ textAlign: 'center' }}>{userData.name}</h1>
-					<p style={{ textAlign: 'center' }}>
-						Количество проектов {userData?.works?.length}
-					</p>
-					<WorkItem {...userData} />
-				</>
+				''
 			)}
 		</div>
 	);

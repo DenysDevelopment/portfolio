@@ -16,14 +16,17 @@ export const Modal = ({ closeModalShow }: any) => {
 
 	const addProject = () => {
 		writeFile(fileImg[0], setProgress, setUrlImg);
+	};
+
+	React.useEffect(() => {
 		const db = getFirestore();
-		if (urlImg !== '') {
+		if (urlImg !== '' && progress === 100) {
 			updateDoc(doc(db, 'users', uid), {
 				works: arrayUnion({ name, desk, link, urlImg }),
 			});
 			closeModalShow();
 		}
-	};
+	}, [urlImg]);
 
 	return (
 		<div className='modal'>

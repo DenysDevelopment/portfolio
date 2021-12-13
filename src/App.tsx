@@ -1,31 +1,20 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from './components';
-import { useAppSelector } from './hooks/store';
+import { useAppDispatch, useAppSelector } from './hooks/store';
 import { About, Works, Login, Register } from './pages';
-import { getData } from './firebase/dataUser';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-	addDoc,
-	collection,
-	getFirestore,
-	setDoc,
-	doc,
-	updateDoc,
-	arrayUnion,
-} from 'firebase/firestore';
 import { List } from './pages/List';
 import { User } from './pages/User';
+import { onAuthState } from './firebase/authUser';
 
 function App() {
 	const { authUser } = useAppSelector((store) => store.auth);
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
+	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {
-		getData();
-		console.log(pathname);
-
 		if (!authUser) {
 			if (pathname.includes('/list/user/')) return;
 			else if (pathname.includes('/list/user/')) navigate('list');
@@ -34,6 +23,7 @@ function App() {
 				navigate('login');
 			}
 		}
+		onAuthState(dispatch, navigate);
 	}, []);
 
 	return (

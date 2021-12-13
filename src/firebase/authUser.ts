@@ -4,15 +4,11 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	updateProfile,
-	browserSessionPersistence,
-	setPersistence,
-	inMemoryPersistence,
-	GoogleAuthProvider,
-	signInWithRedirect,
 	onAuthStateChanged,
 } from 'firebase/auth';
 import { saveDataUser } from './dataUser';
 import { setUserData } from '../redux/actions/setUserData';
+import { setIsAuth } from '../redux/actions/isAuth';
 
 const auth = getAuth(app);
 
@@ -46,10 +42,22 @@ export const createUser = (
 			console.log(errorCode, errorMessage);
 		});
 
-export const loginUser = (email: string, password: string) => {
-	onAuthStateChanged(auth, (user) => {
-		console.log(user);
+export const onAuthState = (dispatch: any, navigate: any) => {
+	return onAuthStateChanged(auth, (user: any) => {
+		if (user) {
+			dispatch(
+				setUserData({
+					name: user.displayName,
+					email: user.email,
+					uid: user.uid,
+				}),
+			);
+			dispatch(setIsAuth());
+			navigate('/works');
+		}
 	});
+};
 
+export const loginUser = (email: string, password: string) => {
 	return signInWithEmailAndPassword(auth, email, password);
 };
