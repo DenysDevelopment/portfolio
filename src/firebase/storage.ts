@@ -9,7 +9,7 @@ import { app } from './';
 const storage = getStorage(app);
 const storageRef = ref(
 	storage,
-	`${new Date().getDate()}_${new Date().getMilliseconds()}`,
+	`${new Date().getDate()}_${new Date().getMonth()}_${new Date().getFullYear()}_${new Date().getMilliseconds()}`,
 );
 
 export const writeFile = (file: any, setProgress: any, setUrlImg: any) => {
